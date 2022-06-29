@@ -21,15 +21,67 @@ export interface FastifyInstance<
   >
 }
 
+export function opaque<
+  RawServer extends F.RawServerBase,
+  RawRequest extends F.RawRequestDefaultExpression<RawServer>,
+  RawReply extends F.RawReplyDefaultExpression<RawServer>,
+  Logger extends F.FastifyLoggerInstance,
+  TypeProvider extends F.FastifyTypeProvider,
+  O extends FastifyInstance<RawServer, RawRequest, RawReply, Logger, TypeProvider> = FastifyInstance<
+    RawServer,
+    RawRequest,
+    RawReply,
+    Logger,
+    TypeProvider
+  >
+>(
+  dsl: FastifyAPI<
+    RawServer,
+    RawRequest,
+    RawReply,
+    Logger,
+    TypeProvider,
+    O
+  >
+) {
+  return <O2 extends O>(): FastifyAPI<
+    RawServer,
+    RawRequest,
+    RawReply,
+    Logger,
+    TypeProvider,
+    O2
+  > =>
+    // @ts-expect-error
+    dsl
+}
+
+export type GetFastifyInstanceType<X extends FastifyAPI<any, any, any, any, any>> = X extends FastifyAPI<
+  any,
+  any,
+  any,
+  any,
+  any,
+  infer O
+> ? O
+  : never
+
 export interface FastifyAPI<
   RawServer extends F.RawServerBase,
   RawRequest extends F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer>,
   Logger extends F.FastifyLoggerInstance,
-  TypeProvider extends F.FastifyTypeProvider
+  TypeProvider extends F.FastifyTypeProvider,
+  O extends FastifyInstance<RawServer, RawRequest, RawReply, Logger, TypeProvider> = FastifyInstance<
+    RawServer,
+    RawRequest,
+    RawReply,
+    Logger,
+    TypeProvider
+  >
 > {
-  readonly Service: Tag<FastifyInstance<RawServer, RawRequest, RawReply, Logger, TypeProvider>>
-  readonly Live: Layer<never, never, FastifyInstance<RawServer, RawRequest, RawReply, Logger, TypeProvider>>
+  readonly Service: Tag<O>
+  readonly Live: Layer<never, never, O>
   readonly listen: (opts?: {
     port?: number
     host?: string
@@ -40,7 +92,7 @@ export interface FastifyAPI<
     writableAll?: boolean
     ipv6Only?: boolean
     signal?: AbortSignal
-  }) => Effect<Scope | FastifyInstance<RawServer, RawRequest, RawReply, Logger, TypeProvider>, Error, string>
+  }) => Effect<Scope | O, Error, string>
 }
 
 export function fastify<

@@ -8,4 +8,4 @@ import { assert, describe, it } from "vitest"
 /**
  * @tsplus global
  */
-import { fastify } from "@effect/fastify"
+import { Fastify } from "@effect/fastify/test/common"
