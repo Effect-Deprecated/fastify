@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+      "noEmit": true,
+      "allowJs": true,
+      "baseUrl": ".",
+      "paths": {
+          "@effect/fastify": [
+              "./packages/fastify/build/esm/index.js"
+          ],
+          "@effect/fastify/test/*": [
+              "./packages/fastify/build/test/*"
+          ],
+          "@effect/fastify/examples/*": [
+              "./packages/fastify/build/examples/*"
+          ],
+          "@effect/fastify/*": [
+              "./packages/fastify/build/esm/*"
+          ],
+      }
+  },
+  "include": [
+      "./packages/fastify/build/esm/**/*.js",
+      "./packages/fastify/build/test/**/*.js",
+      "./packages/fastify/build/examples/**/*.js"
+  ]
+}
