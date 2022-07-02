@@ -1,5 +1,5 @@
-const Server_ = Fastify.fastify()
-interface Server extends Fastify.GetFastifyInstanceType<typeof Server_> {}
+const Server_ = Fastify()
+interface Server extends Fastify.GetInstanceType<typeof Server_> {}
 const Server = Fastify.opaque(Server_)<Server>()
 
 describe("Dummy", () => {

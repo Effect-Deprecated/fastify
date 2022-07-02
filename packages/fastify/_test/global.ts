@@ -1,11 +1,8 @@
-import "@effect/core/global"
-import "@tsplus/stdlib/global"
+import {} from "@effect/core/global"
+import {} from "@effect/fastify/global"
+import {} from "@tsplus/stdlib/global"
 
 /**
  * @tsplus global
  */
 import { assert, describe, it } from "vitest"
-/**
- * @tsplus global
- */
-import { Fastify } from "@effect/fastify/test/common"
